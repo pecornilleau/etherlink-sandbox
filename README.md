@@ -68,61 +68,12 @@ You can use `blockscout_init.patch`:
 cd $BLOCKSCOUT_DIR
 git apply 
 ```
+# Frequent pbs
 
-Nothing really, the blockscout variable are edited in docker-compose/env/...
+- If blockscout strats to act crazy, trying to trace transaction that it can't, 
+then it might be a good idea to tell him to start tracing after a later block. 
+To do that, open `blockscout/docker-compose/ens/common-blockscout.env` and edit
+`TRACE_FIRST_BLOCK`
 
-## common
-https://docs.blockscout.com/for-developers/information-and-settings/env-variables/backend-env-variables
+It's why the alias `conf` is defined.
 
-CHAIN_ID
-COIN
-COIN_NAME
-
-// The RPC endpoint used to fetch blocks, transactions, receipts, tokens.
-// default localhost:8545
-ETHEREUM_JSONRPC_HTTP_URL
-
-// The RPC endpoint specifically for the Erigon/Geth/Nethermind/Besu client used by trace_block and trace_replayTransaction. This can be used to designate a tracing node.
-// default: localhost:8545
-ETHEREUM_JSONRPC_TRACE_URL
-
-// The WebSockets RPC endpoint used to subscribe to the newHeads subscription alerting the indexer to fetch new blocks.
-// default localhost:8546
-ETHEREUM_JSONRPC_WS_URL
-
-## Indexer
-
-// The block number, where import of blocks by catchup fetcher begins from.
-FIRST_BLOCK
-LAST_BLOCK
-
-// The block number, where indexing of internal transactions begins from.
-TRACE_FIRST_BLOCK
-TRACE_LAST_BLOCK
-
-
-# Sequencer sandbox
-to set:
---rpc-addr 0.0.0.0
---initial-kernel
---data-dir
-
---preimages-dir
---verbose
-
-# how to send tx
-
-use cast
-wallet in ./wallet pas de psswd
-export ETH_RPC_URL=localhost:8545
-
-cast send <to> --value <amount>
-forge create <PATH>:<CONTRACT>
-cast send <CONTRACT> "toto()"
-
-
-or use eth-cli because it's simple
-
-# compile contract
-can use solc but really only thing you need is foundry
-solc --abi --evm-version shanghai --output-dir $WD/contracts --overwrite --bin <CONTRACT.SOL> 
