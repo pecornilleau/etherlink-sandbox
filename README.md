@@ -29,8 +29,8 @@ We have a few scripts to use:
     - `./indexer db` to raise up only the db as daemon (to clean it afterwards)
     - `./indexer clean` to clean the db. Password is ceWb1MeLBEeOIfk65gU8EjF8
 - `./sandbox` for the node
-    - `./sandbox up`, rq: not a daemon
-    - `./sandbox up --verbose`, rq: not a daemon, and very chatty
+    - `./sandbox up`, rq: launch in background
+    - `./sandbox up --verbose`, rq: launch in background, and very chatty
     - `./sandbox down`
     - `./sandbox patch`
 - `./new_block` to make the sandbox produce a block
@@ -42,8 +42,15 @@ We have a few scripts to use:
 
 Because stuff will go wrong.
 For the node, see `./sequencer-sandbox-dir`
+
+Also, stdout is redirected to `./stdout_sandbox`
+- idea: 
+```
+tail -f stdout_sandbox
+```
+
 For blockscout, see `docker-compose/services/logs/prod`
-idea: set up a link
+- idea: set up a link
 ```
 ln -s $BLOCKSCOUT_DIR/docker_compose/service/logs/prod logs_blockscout
 ```
