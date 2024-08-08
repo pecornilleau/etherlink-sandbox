@@ -1,0 +1,4 @@
+#!/bin/bash
+source .env
+$TEZOS_DIR/octez-evm-node make kernel installer config installer_sandbox.yaml --bootstrap-account 0x6ce4d79d4e77402e1ef3417fdda433aa744c6e1c --chain-id 123123
+$TEZOS_DIR/smart-rollup-installer get-reveal-installer -u $TEZOS_DIR/evm_kernel.wasm -o installer.hex --setup-file installer_sandbox.yaml -P sequencer-sandbox-dir/wasm_2_0_0

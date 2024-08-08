@@ -1,0 +1,13 @@
+#!/bin/bash
+source .env
+NODE=$TEZOS_DIR/octez-evm-node
+if [ "$1" = "up" ]; then
+     $NODE run sandbox --data-dir sequencer-sandbox-dir --rpc-addr 0.0.0.0 --rpc-port 8545 --initial-kernel installer.hex --time-between-blocks none --private-rpc-port 8546 --cors-headers "*" --cors-origins "*" $2 > stdout_sandbox 2>&1 &
+elif [ "$1" = "down" ]; then
+    pid=`ps -ef | grep octez-evm-node | grep -v grep | awk '{print $2}'`
+    echo $pid
+    kill -9 $pid
+elif [ "$1" = "patch" ]; then
+    KERNEL=$TEZOS_DIR/evm_kernel.wasm
+    $NODE patch kernel with $KERNEL --data-dir sequencer-sandbox-dir --force
+fi

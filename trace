@@ -1,0 +1,2 @@
+#!/bin/bash
+curl -X POST -H 'Content-Type: application/json' --data "{\"jsonrpc\":\"2.0\",\"method\":\"debug_traceTransaction\", \"id\" : 1, \"params\": [\"$1\",{\"tracer\":\"callTracer\", \"onlyTopCall\":false}]}"  http://localhost:8545

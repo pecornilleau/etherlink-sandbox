@@ -1,0 +1,12 @@
+#!/bin/bash
+source .env
+echo $BLOCKSCOUT_DIR
+if [ "$1" = "up" ]; then
+    docker compose -f $BLOCKSCOUT_DIR/docker-compose/docker-compose.yml -p blockscout up $2 
+elif [ "$1" = "down" ]; then
+    docker compose -f $BLOCKSCOUT_DIR/docker-compose/docker-compose.yml -p blockscout down
+elif [ "$1" = "db" ]; then
+    docker compose -f $BLOCKSCOUT_DIR/docker-compose/docker-compose.yml -p blockscout up db -d
+elif [ "$1" = "clean" ]; then
+    dropdb -p 7432 -h localhost -U blockscout blockscout
+fi
