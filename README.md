@@ -65,8 +65,9 @@ solc --abi --evm-version shanghai --output-dir $WD/contracts --overwrite --bin <
 Not much. The CHAIN_ID is probably a good idea.
 You can use `blockscout_init.patch`:
 ```
+cp blockscout_init.patch $BLOCKSCOUT_DIR
 cd $BLOCKSCOUT_DIR
-git apply 
+git apply blockscout_init.patch
 ```
 # Frequent pbs
 
