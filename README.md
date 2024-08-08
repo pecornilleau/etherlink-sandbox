@@ -3,7 +3,9 @@
 - docker, with the docker-compose plugin v2 (moderatly recent docker is fine)
 - tezos/tezos somewhere (duh)
 - blockscout somewhere (duh) (can be in this directory)
+```
     git clone --depth 1 https://github.com/blockscout/blockscout.git
+```
 - Nice to use forge and cast. See https://book.getfoundry.sh/getting-started/installation
 
 # How to
@@ -16,6 +18,7 @@ So, first thing:
 ```
 source .env
 ```
+
 ## some scripts for admin
 
 We have a few scripts to use:
