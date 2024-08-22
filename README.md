@@ -88,3 +88,28 @@ To do that, open `blockscout/docker-compose/ens/common-blockscout.env` and edit
 
 It's why the alias `conf` is defined.
 
+# Observer
+
+First get a snapshot:
+```
+wget https://snapshots.eu.tzinit.org/etherlink-mainnet/eth-mainnet.full
+```
+
+Then build a rollup-node directory
+```
+octez-smart-rollup-node snapshot import eth-mainnet.full --data-dir rollup-node-dir --no-check
+```
+
+Then build a sequencer directory from the rollup-directory
+```
+octez-evm-node init from rollup node rollup-node --data-dir sequencer-observer-dir --omit-delayed-tx-events
+```
+
+Then start an observer without a rollup-node
+```
+octez-evm-node run observer --dont-track-rollup-node --data-dir sequencer-observer-dir --evm-node-endpoint https://relay.mainnet.etherlink.com -K --rpc-addr 0.0.0.0 --rpc-port 8545 --initial-kernel installer.hex --time-between-blocks none --cors-headers "*" --cors-origins "*"
+```
+or
+```
+./observer up
+```

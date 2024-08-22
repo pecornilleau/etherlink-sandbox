@@ -1,11 +1,11 @@
 #!/bin/bash
 source .env
-DATA_DIR=sequencer-sandbox-dir
-
+DATA_DIR=sequencer-observer-dir
+EVM_NODE=https://relay.mainnet.etherlink.com 
 pid=`ps -ef | grep octez-evm-node | grep -v grep | awk '{print $2}'`
 
 if [[ "$1" = "up"  && -z "${pid}" ]]; then
-     $NODE run sandbox --data-dir $DATA_DIR --rpc-addr 0.0.0.0 --rpc-port 8545 --initial-kernel installer.hex --time-between-blocks none --private-rpc-port 8546 --cors-headers "*" --cors-origins "*" $2 >> stdout_sandbox 2>&1 &
+    $NODE run observer --dont-track-rollup-node --data-dir $DATA_DIR --evm-node-endpoint $EVM_NODE --rpc-addr 0.0.0.0 --rpc-port 8545  --cors-headers "*" --cors-origins "*" $2 >> stdout_observer 2>&1 &
     pid=`ps -ef | grep octez-evm-node | grep -v grep | awk '{print $2}'`
     echo "Started evm node: ${pid}"
 elif [[ "$1" = "up"  && -n "${pid}" ]]; then
