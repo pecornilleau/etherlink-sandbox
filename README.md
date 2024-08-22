@@ -27,12 +27,13 @@ We have a few scripts to use:
     - `./indexer up -d` (to get it as a daemon)
     - `./indexer down`
     - `./indexer db` to raise up only the db as daemon (to clean it afterwards)
-    - `./indexer clean` to clean the db. Password is ceWb1MeLBEeOIfk65gU8EjF8
-- `./sandbox` for the node
+    - `./indexer clean` to clean the db (need to start only the db before)
+- `./sandbox` for a node in sandbox mode
     - `./sandbox up`, rq: launch in background
     - `./sandbox up --verbose`, rq: launch in background, and very chatty
     - `./sandbox down`
     - `./sandbox patch`
+- `./observer` for a node in observer node
 - `./new_block` to make the sandbox produce a block
 - `./make_installer` to create the installer for the first launch (set a faucet and da fees)
 - `./make_kernel` to build a kernel in $TEZOS_DIR before doing a patch
@@ -90,6 +91,8 @@ It's why the alias `conf` is defined.
 
 # Observer
 
+## setup 
+
 First get a snapshot:
 ```
 wget https://snapshots.eu.tzinit.org/etherlink-mainnet/eth-mainnet.full
@@ -113,3 +116,9 @@ or
 ```
 ./observer up
 ```
+
+## How to
+
+Use the `observer` script, same commands: `up`, `down`, `patch`.
+
+It targets mainnet, to change that edit `observer` and set another endpoint.
