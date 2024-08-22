@@ -1,10 +1,13 @@
+Provided as an example. It should work, at least it did for me at some poitn in time :shrug:
+
 # Prerequisite
 
 - docker, with the docker-compose plugin v2 (moderatly recent docker is fine)
 - tezos/tezos somewhere (duh)
 - Nice to use forge and cast. See https://book.getfoundry.sh/getting-started/installation
 
-# How to
+
+# setup
 
 There is `.env` with the necessary variables. 
 You need to indicate `$TEZOS_DIR`. 
@@ -15,15 +18,13 @@ So, first thing:
 source .env
 ```
 
-## setup
-
 There is an option to either use a sandbox or an observer. You should probably have distincts instances of blockscout and tweak the scripts if you want both in same dir. Or clone this repo twice :shrug:
 
-### blockscout
+## blockscout
 
 Clone blockscout
 ```
-    git clone --depth 1 https://github.com/blockscout/blockscout.git
+git clone --depth 1 https://github.com/blockscout/blockscout.git
 ```
 
 Patch it using `blockscout_init.patch`:
@@ -38,11 +39,11 @@ Optionnal: setup a link to access the logs easily
 ln -s $BLOCKSCOUT_DIR/docker_compose/service/logs/prod logs_blockscout
 ```
 
-### Sandbox
+## Sandbox
 
 The idea is to start a local chain from block 0 and trigger block production by
 hand, and point a blockscout at it, to test a patched kernel or node on crafted
-transaction. There is a faucet.
+transactions. There is a faucet.
 
 Create the initial kernel with faucet and da fees:
 ```
@@ -72,7 +73,7 @@ Start the indexer
 
 Make sure the indexer indexes by visiting http://localhost
 
-### Observer
+## Observer
 
 The idea is to start an observer looking at mainnet, to point a blockscout 
 instance on it and check a patched kernel or node.
@@ -114,6 +115,9 @@ Start the indexer:
 Look at it go, catching up to the node. You can visit http://localhost to see 
 the frontend.
 
+
+# How to
+
 ## some scripts for admin
 
 We have a few scripts to use:
@@ -134,18 +138,49 @@ We have a few scripts to use:
 - `./make_kernel` to build a kernel in $TEZOS_DIR before doing a patch
 - `./trace <0x...>` to query the node directly for the call trace of a particular transaction
 
+## How to patch the kernel
+
+Build the kernel in `$TEZOS_DIR`. The provided script builts it in debug mode.
+```
+./make_kernel
+```
+
+Patch the node (using `sandbox` or `observer`)
+```
+./sandbox down
+./sandbox patch
+```
+The output tells you at which l2 block the patch is applied _in hex_
+
+## How to clean the indexer
+
+Stop it
+```
+./indexer down
+```
+
+Starts the db and drop its content
+```
+./indexer db
+./indexer clean
+./indexer down
+
+```
+
 ## LOGS
 
 Because stuff will go wrong.
-For the node, see `./sequencer-sandbox-dir` or `.sequencer-observer-dir`
+For the node, see `./sequencer-sandbox-dir` or `./sequencer-observer-dir`.
 
 Also, stdout is redirected to `./stdout_sandbox` or `./stdout_observer`
 
-For blockscout, see `docker-compose/services/logs/prod`
+For blockscout, see `docker-compose/services/logs/prod` 
 
 ## Send tx
 
-Use cast and forge. The `.env` can set up the rpc url and a keystore for the faucet (in `./wallet`). There is no password on the keystore. Or use a local keystore (if you use a local keystore make sure the env variables for cast in .env are commented).
+Use cast and forge. The `.env` can set up the rpc url and a keystore for the faucet (in `./wallet`). There is no password on the keystore. Or use a local keystore but make sure the env variables for cast in .env are commented.
+
+See https://book.getfoundry.sh/reference/cast/cast-wallet
 
 ```
 cast send <to> --value <amount>
@@ -159,6 +194,13 @@ To compile contracts, can use solc but really only thing you need is foundry
 ```
 solc --abi --evm-version shanghai --output-dir $WD/contracts --overwrite --bin <CONTRACT.SOL> 
 ```
+
+# Faucet for sandbox
+
+Address: `0x6ce4d79d4E77402e1ef3417Fdda433aA744C6e1c`
+
+Private key: `9722f6cc9ff938e63f8ccb74c3daa6b45837e5c5e3835ac08c44c50ab5f39dc0`
+
 # Frequent pbs
 
 - If blockscout strats to act crazy, trying to trace transaction that it can't, 
