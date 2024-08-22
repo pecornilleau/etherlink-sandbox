@@ -100,17 +100,17 @@ wget https://snapshots.eu.tzinit.org/etherlink-mainnet/eth-mainnet.full
 
 Then build a rollup-node directory
 ```
-octez-smart-rollup-node snapshot import eth-mainnet.full --data-dir rollup-node-dir --no-check
+$TEZOS_DIR/octez-smart-rollup-node snapshot import eth-mainnet.full --data-dir rollup-node-dir --no-check
 ```
 
 Then build a sequencer directory from the rollup-directory
 ```
-octez-evm-node init from rollup node rollup-node --data-dir sequencer-observer-dir --omit-delayed-tx-events
+$TEZOS_DIR/octez-evm-node init from rollup node rollup-node --data-dir sequencer-observer-dir --omit-delayed-tx-events
 ```
 
 Then start an observer without a rollup-node
 ```
-octez-evm-node run observer --dont-track-rollup-node --data-dir sequencer-observer-dir --evm-node-endpoint https://relay.mainnet.etherlink.com -K --rpc-addr 0.0.0.0 --rpc-port 8545 --initial-kernel installer.hex --time-between-blocks none --cors-headers "*" --cors-origins "*"
+$TEZOS_DIR/octez-evm-node run observer --dont-track-rollup-node --data-dir sequencer-observer-dir --evm-node-endpoint https://relay.mainnet.etherlink.com -K --rpc-addr 0.0.0.0 --rpc-port 8545 --initial-kernel installer.hex --time-between-blocks none --cors-headers "*" --cors-origins "*"
 ```
 or
 ```
@@ -121,4 +121,4 @@ or
 
 Use the `observer` script, same commands: `up`, `down`, `patch`.
 
-It targets mainnet, to change that edit `observer` and set another endpoint.
+It targets mainnet, to change that, choose another snapshot and edit `observer` to set another endpoint.
