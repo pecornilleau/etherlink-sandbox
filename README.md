@@ -36,7 +36,7 @@ git apply blockscout_init.patch
 
 Optionnal: setup a link to access the logs easily
 ```
-ln -s $BLOCKSCOUT_DIR/docker_compose/service/logs/prod logs_blockscout
+ln -s $BLOCKSCOUT_DIR/docker-compose/services/logs/prod logs_blockscout
 ```
 
 ## Sandbox
