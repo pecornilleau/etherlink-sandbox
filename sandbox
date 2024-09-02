@@ -15,6 +15,10 @@ elif [[ "$1" = "down" && -z "${pid}" ]]; then
 elif [[ "$1" = "down" && -n "${pid}" ]]; then
     echo "killed $pid"
     kill -9 $pid
+elif [[ "$1" = "rup" ]]; then
+    ./$0 down 
+    wait
+    ./$0 up $2
 elif [[ "$1" = "patch" ]]; then
     $NODE patch kernel with $KERNEL --data-dir $DATA_DIR --force
 fi
