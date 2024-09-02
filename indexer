@@ -8,5 +8,10 @@ elif [ "$1" = "down" ]; then
 elif [ "$1" = "db" ]; then
     docker compose -f $BLOCKSCOUT_DIR/docker-compose/docker-compose.yml -p blockscout up db -d
 elif [ "$1" = "clean" ]; then
-   PGPASSWORD=ceWb1MeLBEeOIfk65gU8EjF8 dropdb -p 7432 -h localhost -U blockscout -e -f -w blockscout
+    PGPASSWORD=ceWb1MeLBEeOIfk65gU8EjF8 dropdb -p 7432 -h localhost -U blockscout -e -f -w blockscout
+elif [ "$1" = "dl" ]; then
+    git clone --depth 1 https://github.com/blockscout/blockscout.git
+elif [ "$1" = "install" ]; then
+    cd $BLOCKSCOUT_DIR 
+    git apply ../blockscout_init.patch
 fi
