@@ -51,6 +51,13 @@ To install:
 ./indexer install
 ```
 
+To run:
+```
+./indexer up
+```
+Then go to http://localhost for the front.
+
+
 ## Sandbox
 
 The idea is to start a local chain from block 0 and trigger block production by
@@ -89,6 +96,7 @@ Make sure the indexer indexes by visiting http://localhost
 
 The idea is to start an observer looking at mainnet, to point a blockscout 
 instance on it and check a patched kernel or node.
+
 
 First get a snapshot:
 ```
@@ -172,6 +180,10 @@ The kernel can also be given directly
 ```
 ./sandbox patch PATH/TO/kernel.wasm
 ```
+
+/!\ you can patch an observer but make sure you know what kernel to use /!\
+
+/!\ if the kernel is not compatible with mainnet, things will probably break /!\
 
 ## How to clean the indexer
 
