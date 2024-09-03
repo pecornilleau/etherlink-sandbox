@@ -64,9 +64,9 @@ The idea is to start a local chain from block 0 and trigger block production by
 hand, and point a blockscout at it, to test a patched kernel or node on crafted
 transactions. There is a faucet.
 
-Create the initial kernel with faucet and da fees:
+Create the initial kernel with faucet and da fees (default to kernel in `$TEZOS_DIR`):
 ```
-./make_installer
+./sandbox install [path/to/kernel.wasm]
 ```
 
 Start your sandbox:
