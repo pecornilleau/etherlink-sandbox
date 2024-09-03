@@ -1,4 +1,7 @@
-Provided as an example. It should work, at least it did for me at some poitn in time :shrug:
+Provided as an example. It should work, at least it did for me at some point in
+time :shrug:
+
+Discoverability is not ideal but there's a README at least.
 
 # Prerequisite
 
@@ -6,6 +9,25 @@ Provided as an example. It should work, at least it did for me at some poitn in 
 - tezos/tezos somewhere (duh)
 - Nice to use forge and cast. See https://book.getfoundry.sh/getting-started/installation
 
+# tl;dr
+Set `$TEZOS_DIR` in `.env`
+
+To start evm node in sandbox node
+```
+./make_installer
+./sandbox up
+```
+
+To start blockscout
+```
+./indexer install
+./indexer up
+```
+
+To start an observer targeting mainnet, do the observer setup then
+```
+./observer up
+```
 
 # setup
 
@@ -18,25 +40,15 @@ So, first thing:
 source .env
 ```
 
-There is an option to either use a sandbox or an observer. You should probably have distincts instances of blockscout and tweak the scripts if you want both in same dir. Or clone this repo twice :shrug:
+There is an option to either use a sandbox or an observer. You should probably 
+have distincts instances of blockscout and tweak the scripts if you want both 
+in same dir. Or clone this repo twice :shrug:
 
 ## blockscout
 
-Clone blockscout
+To install:
 ```
-git clone --depth 1 https://github.com/blockscout/blockscout.git
-```
-
-Patch it using `blockscout_init.patch`:
-```
-cp blockscout_init.patch $BLOCKSCOUT_DIR
-cd $BLOCKSCOUT_DIR
-git apply blockscout_init.patch
-```
-
-Optionnal: setup a link to access the logs easily
-```
-ln -s $BLOCKSCOUT_DIR/docker-compose/services/logs/prod logs_blockscout
+./indexer install
 ```
 
 ## Sandbox
@@ -122,6 +134,7 @@ the frontend.
 
 We have a few scripts to use:
 - `./indexer` for blockscout
+    - `./indexer install` clones and very minimal configuration of blockscout
     - `./indexer up` (get everything up, not as a deamon)
     - `./indexer up -d` (to get it as a daemon)
     - `./indexer down`
@@ -130,9 +143,11 @@ We have a few scripts to use:
 - `./sandbox` for a node in sandbox mode
     - `./sandbox up`, rq: launch in background
     - `./sandbox up --verbose`, rq: launch in background, and very chatty
+    - `./sandbox rup`, to kill existing sandbox and relaunch
     - `./sandbox down`
     - `./sandbox patch`
-- `./observer` for a node in observer node
+    - `./sandbox patch PATH/TO/kernel.wasm`
+- `./observer` for a node in observer node (same cmd as sandbox)
 - `./new_block` to make the sandbox produce a block
 - `./make_installer` to create the installer for the first launch (set a faucet and da fees)
 - `./make_kernel` to build a kernel in $TEZOS_DIR before doing a patch
@@ -152,7 +167,14 @@ Patch the node (using `sandbox` or `observer`)
 ```
 The output tells you at which l2 block the patch is applied _in hex_
 
+The kernel can also be given directly
+```
+./sandbox patch PATH/TO/kernel.wasm
+```
+
 ## How to clean the indexer
+
+If the DB need to be cleaned up to reset the indexer.
 
 Stop it
 ```
