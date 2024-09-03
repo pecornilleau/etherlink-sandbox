@@ -13,4 +13,5 @@ elif [ "$1" = "install" ]; then
     git clone --depth 1 https://github.com/blockscout/blockscout.git $BLOCKSCOUT_DIR
     wait
     ln -s $BLOCKSCOUT_DIR/docker-compose/services/logs/prod logs_blockscout
+    sed -i "s/CHAIN_ID=.*/CHAIN_ID=123123/" $BLOCKSCOUT_DIR/docker-compose/envs/common-blockscout.env
 fi
