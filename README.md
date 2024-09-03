@@ -14,7 +14,7 @@ Set `$TEZOS_DIR` in `.env`
 
 To start evm node in sandbox node
 ```
-./make_installer
+./sandbox install
 ./sandbox up
 ```
 
@@ -141,6 +141,8 @@ We have a few scripts to use:
     - `./indexer db` to raise up only the db as daemon (to clean it afterwards)
     - `./indexer clean` to clean the db (need to start only the db before)
 - `./sandbox` for a node in sandbox mode
+    - `./sandbox install` to create installer kernel (fetch the `evm_kernel.wasm` in `$TEZOS_DIR`, will be loaded on startup)
+    - `./sandbox install path/to/kernel.wasm` to create installer from specified kernel
     - `./sandbox up`, rq: launch in background
     - `./sandbox up --verbose`, rq: launch in background, and very chatty
     - `./sandbox rup`, to kill existing sandbox and relaunch
@@ -149,7 +151,6 @@ We have a few scripts to use:
     - `./sandbox patch PATH/TO/kernel.wasm`
 - `./observer` for a node in observer node (same cmd as sandbox)
 - `./new_block` to make the sandbox produce a block
-- `./make_installer` to create the installer for the first launch (set a faucet and da fees)
 - `./make_kernel` to build a kernel in $TEZOS_DIR before doing a patch
 - `./trace <0x...>` to query the node directly for the call trace of a particular transaction
 
