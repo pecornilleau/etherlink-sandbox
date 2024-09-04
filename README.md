@@ -3,6 +3,8 @@ time :shrug:
 
 Discoverability is not ideal but there's a README at least.
 
+Also, if you want the raw commands, see [CMDS.md](./CMDS.md)
+
 # Prerequisite
 
 - docker, with the docker-compose plugin v2 (moderatly recent docker is fine)
